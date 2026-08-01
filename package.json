@@ -1,15 +1,15 @@
 {
   "name": "mail",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": true,
   "description": "Go-powered Outlook, Hotmail and Microsoft Graph mailbox manager with SQLite",
   "scripts": {
-    "dev": "concurrently -k -n api,web -c cyan,magenta \"go run ./server/cmd/mail\" \"vite\"",
-    "dev:api": "go run ./server/cmd/mail",
-    "build": "npm run build:web && npm run build:server",
-    "build:web": "vite build",
-    "build:server": "node -e \"require('node:fs').mkdirSync('build',{recursive:true})\" && go build -trimpath -o build/mail-server ./server/cmd/mail && go build -trimpath -o build/bootstrap-admin ./server/cmd/bootstrap-admin",
-    "start": "go run ./server/cmd/mail",
+    "dev": "node init && concurrently -k -n api,web -c cyan,magenta \"go run ./server/cmd/mail\" \"vite\"",
+    "dev:api": "node init && go run ./server/cmd/mail",
+    "build": "node init && npm run build:web && npm run build:server",
+    "build:web": "node init && vite build",
+    "build:server": "node init && node -e \"require('node:fs').mkdirSync('build',{recursive:true})\" && go build -trimpath -o build/mail-server ./server/cmd/mail && go build -trimpath -o build/bootstrap-admin ./server/cmd/bootstrap-admin",
+    "start": "node init && go run ./server/cmd/mail",
     "bootstrap-admin": "go run ./server/cmd/bootstrap-admin",
     "test": "npm run test:frontend && npm run test:go",
     "test:frontend": "vitest run --dir src --environment jsdom",
@@ -23,7 +23,9 @@
     "check": "npm run contract:check && npm run check:desktop-source && npm run test && npm run vet && npm run typecheck"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "lucide-react": "^0.468.0",
+    "node-fetch": "^3.3.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
